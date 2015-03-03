@@ -1,0 +1,16 @@
+1
+
+        try {
+            roomAID = CNSHelper.findAgent(SmileyAgent.this, RoomAgent.TYPE);
+            doorAID = CNSHelper.findAgent(SmileyAgent.this, DoorAgent.TYPE);
+        } catch (FIPAException fIPAException) {
+            log.error("unable to search", fIPAException);
+            doDelete();
+        }
+
+3
+
+            log.info(getAID().getName() + " informing neighbours");
+            getContentManager().fillContent(smsg, doorLoc);
+            send(smsg);
+

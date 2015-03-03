@@ -1,0 +1,15 @@
+1
+
+        if (getTickCount() % 600 == 0) {
+            initMove();
+        }
+
+2
+
+            try {
+                DFService.deregister(myAgent);
+            } catch (FIPAException ex) {
+                log.warn("unable to deregister: " + myAgent.getName(), ex);
+            }
+            stop();
+

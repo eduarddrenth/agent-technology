@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<project name="WORKSHOP" default="runall" basedir=".">
+    <property file="build.properties" />
+
+    <path id="class.path">
+        <fileset dir="." includes="**/*.jar"/>
+    </path>
+
+
+    <target name="runall" description="launches the workshop container">
+
+        <exec executable="ant" dir="." spawn="true">
+            <arg value="-f"/>
+            <arg value="run.xml"/>
+            <arg value="runPlatform"/>
+        </exec>
+
+        <echo message="wait for main-container"/>
+        <sleep seconds="4" description="wait for main-container"/>
+
+        <exec executable="ant" dir="." spawn="true">
+            <arg value="-f"/>
+            <arg value="run.xml"/>
+            <arg value="runMediator"/>
+        </exec>
+
+        <echo message="wait for mediator"/>
+        <sleep seconds="4" description="wait for mediator"/>
+
+        <antcall target="runsmileys"/>
+
+    </target>
+
+    <target name="runMediator" description="launches the workshop mediator">
+        <java classname="${main.class}" classpathref="class.path" fork="yes">
+            <jvmarg value="-Djava.util.logging.config.file=config/jade-logging.properties" />
+            <jvmarg value="-Xmx80m" />
+            <jvmarg value="-Xms80m" />
+            <arg value="config/jademediator.properties"/>
+        </java>
+    </target>
+
+    <target name="runPlatform" description="launches the workshop platform and door and room">
+        <java classname="${main.class}" classpathref="class.path" fork="yes">
+            <jvmarg value="-Djava.util.logging.config.file=config/jade-logging.properties" />
+            <jvmarg value="-Xmx120m" />
+            <jvmarg value="-Xms120m" />
+            <arg value="config/jademain.properties"/>
+        </java>
+    </target>
+
+    <target name="runsmileys" description="launches the workshop smieys">
+        <java classname="${main.class}" classpathref="class.path" fork="yes">
+            <jvmarg value="-Djava.util.logging.config.file=config/jade-logging.properties" />
+            <jvmarg value="-Xmx120m" />
+            <jvmarg value="-Xms120m" />
+            <arg value="config/jadesmileys.properties"/>
+        </java>
+    </target>
+
+</project>

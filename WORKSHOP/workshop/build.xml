@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<project name="WORKSHOP" default="all" basedir=".">
+	<property file="build.properties" />
+    <import file="${cns.lib.dir}/generic.build.xml"/>
+	<path id="class.path" refid="projects.class.path"/>
+	        
+<!--
+
+    run tasks, moved to run.xml
+
+    procedure:
+
+    1) ant deploy
+    2) in the dist directory: ant -f run.xml <target>
+-->
+
+</project>

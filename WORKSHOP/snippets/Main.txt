@@ -1,0 +1,19 @@
+1
+
+            JadeHelper.launchJade(args[0]);
+
+            
+2
+
+            JadeHelper.launchJade(args[0]);
+
+3
+
+            JadeHelper.launchJade(p);
+
+4
+
+                // start the smiley
+                JadeHelper.startLocalAgent(InetAddress.getLocalHost().getHostAddress().substring(InetAddress.getLocalHost().getHostAddress().lastIndexOf(".") + 1)
+                            + "_SMILEY_" + i, SmileyAgent.class.getName(), null);
+

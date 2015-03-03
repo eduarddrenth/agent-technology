@@ -1,0 +1,14 @@
+1
+
+        door.setX(Integer.parseInt(JadeHelper.getProperty(X)));
+        door.setY(Integer.parseInt(JadeHelper.getProperty(Y)));
+        door.setAID(getAID());
+
+2
+
+
+    @Override
+    protected void fillDescription(CNSAgentInitializer init) {
+        init.addServiceDescription(CNSHelper.createServiceDescription(TYPE, TYPE));
+    }
+

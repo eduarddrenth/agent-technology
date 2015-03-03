@@ -1,0 +1,202 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>com.logica.cns</groupId>
+   <artifactId>cnsparent</artifactId>
+   <version>2.0-SNAPSHOT</version>
+   <packaging>pom</packaging>
+  
+   <name>CNS-PARENT</name>
+   
+   <modules>
+      <module>trustedAgents</module>
+      <module>AGENT-LIBRARY</module>
+      <module>CNS_UTILS</module>
+      <module>FloraHolland</module>
+      <module>DUST-AMC</module>
+      <module>WORKSHOP</module>
+   </modules>
+  
+   <url>https://github.com/eduarddrenth/agent-technology</url>
+   <inceptionYear>2009</inceptionYear>
+  
+   <repositories>
+      <repository> 
+         <id>tilab</id> 
+         <url>http://jade.tilab.com/maven/</url> 
+      </repository>
+   </repositories>
+
+   <developers>
+      <developer>
+         <id>eduarddrenth</id>
+         <name>Eduard Drenth</name>
+         <organization>Logica</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Project lead</role>
+         </roles>      
+      </developer>
+      <developer>
+         <id>wmulder</id>
+         <name>Wico Mulder</name>
+         <organization>Qfree</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Project lead</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>arjanstoter</id>
+         <name>Arjan Stoter</name>
+         <organization>Logica</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>ceriel</id>
+         <name>Ceriel Jacobs</name>
+         <organization>VU</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>gabriele</id>
+         <name>Gabriele Modena</name>
+         <organization>Pythonic</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>marksant</id>
+         <name>Mark Santcroos</name>
+         <organization>AMC</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>rfscholte</id>
+         <name>Robert Scholte</name>
+         <organization>Logica</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>sdalmolen</id>
+         <name>Simon Dalmolen</name>
+         <organization>Logica</organization>
+         <timezone>+1</timezone>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>  
+   </developers>
+  
+   <scm>
+      <developerConnection>scm:git:git://github.com/eduarddrenth/agent-technology/</developerConnection>
+   </scm>
+   <!--
+   <issueManagement>
+     <url>https://gforge.vl-e.nl/tracker/?group_id=38</url>
+   </issueManagement>
+   -->
+   <properties>
+      <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+   </properties>
+  
+   <build>
+    
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-checkstyle-plugin</artifactId>
+               <version>2.14</version>
+            </plugin>
+            <!-- Codehaus plugins in alphabetical order -->
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>cobertura-maven-plugin</artifactId>
+               <version>2.6</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+               <source>1.5</source>
+               <target>1.5</target>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+  
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.18.1</version>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>report-only</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.1</version>
+            <configuration>
+               <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+               <docletArtifact>
+                  <groupId>org.umlgraph</groupId>
+                  <artifactId>doclet</artifactId>
+                  <version>5.1</version>
+               </docletArtifact>
+               <!-- <additionalparam>-views</additionalparam>   -->
+               <additionalparam>-all -inferdep -inferrel -inferreltype composed -hide (java.*|jade.*) -collpackages java.util.*</additionalparam>
+               <useStandardDocletOptions>true</useStandardDocletOptions>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>3.0.0</version>
+         </plugin>
+      </plugins>
+   </reporting>
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+         </dependency>
+         <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+         </dependency>
+         <dependency>  
+            <groupId>com.tilab.jade</groupId> 
+            <artifactId>jade</artifactId> 
+            <version>4.3.2</version>  
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+</project>
