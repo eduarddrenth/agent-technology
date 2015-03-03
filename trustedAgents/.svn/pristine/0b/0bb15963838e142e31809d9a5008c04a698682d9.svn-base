@@ -1,3 +1,0 @@
-services = org.logica.ctis.security.SecurityService
-org.logica.ctis.security.SecurityService_tokenprovider = org.logica.ctis.security.OwnerBasedTokenProvider
-dump-options = true
