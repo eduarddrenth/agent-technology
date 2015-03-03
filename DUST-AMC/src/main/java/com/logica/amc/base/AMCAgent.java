@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.logica.cns.generic.CNSAgentInitializer;
 import org.logica.cns.generic.CNSAgentInitializerImpl;
-import org.logica.cns.generic.CNSContext;
 import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.CNSMessageHandlerImpl;
@@ -26,7 +25,6 @@ import org.logica.cns.generic.CNSReceiveMessagesBehavior;
  */
 public abstract class AMCAgent extends Agent {
 
-    private CNSContext context;
 
     protected void fillOntology(CNSAgentInitializer init) {
         
@@ -77,9 +75,5 @@ public abstract class AMCAgent extends Agent {
 
 
     protected abstract void handleStatus(StatusIs status);
-
-    public CNSContext getCNSContext() {
-        return context;
-    }
 
 }

@@ -1,8 +1,10 @@
 # agent-technology
 increasingly viable technology to support distributed applications
 
-Soon, after I've cleaned them up a bit I will put here:
+You can find here:
 
-- A library supporting FIPA Jade
-- A sample application in logistics
-- A sample application in healthcare (grid computing)
+- a securit add-on for jade
+- a library for jade
+- a jade workshop
+- a sample application in logistics
+- a sample application in healthcare
