@@ -1,0 +1,107 @@
+Hi,
+
+Thanks for your response. In the attachment is a version of the amc project. You
+
+* The goal is to have two agents started for each workflow, one at VBrowser, one at MOTEUR. In case of jobfailure one agent starts on a workernode. The agent
+system should as independent as possible.
+
+* Extending the MOTEUR plugin sounds like tight coupling, a notifying approach is more loosely coupled, I am in favor of this approach. The only thing the
+MOTEUR plugin has to do is fire an event that can be recognized as a 'start MOTEUR workflow event' together with the workflow id. In fact I realy don't care
+much about the recognition mechanism, but to look upon 'start MOTEUR workflow event' as a NEW_RESOURCE event in terms of VRL sounds logical to me at first
+glance.
+
+* Perhaps the simplest way is to fire a ResourceEvent from the MOTEUR plugin that holds the URL (https://....) to the workflow information and is recognizable
+as a 'workflow start' through a special String in the message.
+
+* Monitoring on the server side would imply an extra process running on the server. And if we delegate the initiative for starting agents on the MOTEUR server
+we have a harder time finding our way back to the VBrowser instance.
+
+* I totaly agree with you that URI analysis is not the way to go
+
+* I do not know about the WS resource, is that an alternative to introducing a MOTEUR resource?
+
+* When a 'MOTEUR workflow' receives the predicate resource, this blurs the definition of 'resource'. 1 it is temporary and 2 basically it is just a http(s)
+resource (and/or WS resource)
+
+Recap:
+
+1 I favor a notification approach above a extending approach
+2 I would not introduce an extra monitoring process on the MOTEUR server
+3 There are good reasons not to introduce a MOTEUR vrl
+4 For the time being I base my development on 'ResourceEvent with special message'
+
+Eduard
+
+> Hi Eduard, Piter /et al,/
+>
+> Some comments about this week's emails about moteur VRLs and agent plugin.
+>
+> * I can't connect to the AMC wiki (and I don't think I'm supposed to) so
+> could you kindly send your plan by email ?
+> * If the only goal is to be notified when a MOTEUR workflow starts then
+> wouldn't it be more simple to just extend the MOTEUR plugin itself
+> accordingly ?
+> * Another possibility would also be to monitor on the server side. Every
+> workflow is assigned a unique directory containing all the logs so that
+> would be quite easy to detect when a workflow starts. And this directory
+> structure is supposed to stay.
+> * I am also not in favor of an URI analysis to detect whether a workflow
+> has been lauched. Basically, Moteur URLs do not comply to anything and
+> their format might be changed without any notice.
+> * Moteur servers are actually Web-Services. Does it make sense to use
+> the regular WS resource ? (as far as i remember there is already one in
+> vlet).
+> * Trying to find use-cases for moteur VRLs, we could have 1 VRL for each
+> server configuration (i.e. Web-Service parameters), depending whether we
+> want, e.g., pilot jobs, timeout, etc. For every set of params we could
+> have either the same WS endpoint or different ones. But again, shouldn't
+> it be handled within the workflow plugin (e.g. in the configuration tab)
+> rather than externally, as a VRL ?
+> I feel like Creatis users would prefer to have the resources limited to
+> *storage* resources and that everything dealing with execution should be
+> delegated to some plugin. But of course I am very open to any argument
+> in favour of moteur VRLs.
+>
+> Best regards,
+> Tristan
+>
+> On 10/23/2009 02:35 PM, Piter T. de Boer wrote:
+>> Hi,
+>>
+>> Can you help me hook up an agent with the start of a MOTEUR workflow?
+>>
+>> Here
+>> http://amc-app1.amc.sara.nl/twiki/bin/view/EBioScience/DUSTProject/DustPilotProjectDev
+>> you can read how I want to build my application.
+>>
+>> Basically I would like to write a VBrowser plugin that somehow is
+>> notified when a MOTEUR workflow starts.
+>>
+>> If I look at PanelConfigWorkflow#runWorkflow I see that
+>> informChangeLinkVRL is fired.
+>>
+>> Do you think it is a possibility to register my plugin with VBrowser
+>> in a way that it receives a callback?
+>>
+>> Regards,
+>>
+>> Eduard
+>>
+>> ------------------------------------------------
+>> Eduard Drenth
+>> Logica Groningen
+>> Java / XML specialist
+>> 06-20943428
+>>
+>
+>
+> --
+> Tristan Glatard
+> CNRS researcher
+> University of Lyon ; CREATIS-LRMN
+> http://www.creatis.insa-lyon.fr/~glatard
+> Tél : +33 (0) 4 72 43 72 99
+> Fax : +33 (0) 4 72 43 63 12
+>
+>
+

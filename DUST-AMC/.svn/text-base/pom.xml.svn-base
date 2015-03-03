@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+      <groupId>com.logica.cns</groupId>
+      <artifactId>cnsparent</artifactId>
+      <version>1.1-SNAPSHOT</version>
+  </parent>
+   
+  <artifactId>dustamc</artifactId>
+  <version>1.1-SNAPSHOT</version>
+  
+  <name>DUST-AMC</name>
+
+  <scm>
+    <developerConnection>scm:svn:https://gforge.vl-e.nl/svn/di3/cns/projecten/DUST/DUST-AMC</developerConnection>
+    <url>https://gforge.vl-e.nl/plugins/scmsvn/viewcvs.php/cns/projecten/DUST/DUST-AMC/?root=di3</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.logica.cns</groupId>
+      <artifactId>cnslibrary</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.logica.cns</groupId>
+      <artifactId>cnsutils</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+  </build> 
+</project>

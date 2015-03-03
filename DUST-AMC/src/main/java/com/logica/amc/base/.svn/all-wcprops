@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base
+END
+AMCAgent.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/di3/!svn/ver/3139/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/AMCAgent.java
+END
+StatusIs.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/StatusIs.java
+END
+AgentsPrepared.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/AgentsPrepared.java
+END
+SQLiteDB.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/SQLiteDB.java
+END
+AMCVocabulary.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/AMCVocabulary.java
+END
+StatusNotification.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/StatusNotification.java
+END
+AMCOntology.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/AMCOntology.java
+END
+AMCConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/AMCConstants.java
+END
+JobIdNotification.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/di3/!svn/ver/3002/cns/projecten/DUST/DUST-AMC/src/com/logica/amc/base/JobIdNotification.java
+END

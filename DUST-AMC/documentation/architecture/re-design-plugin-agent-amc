@@ -1,0 +1,215 @@
+From ptdeboer@uva.nl Wed Oct 21 14:35:11 2009
+Received: from [146.50.4.51] (helo=imap.science.uva.nl) by mx04.solcon.nl
+ with esmtp (Exim 4.60) (envelope-from <ptdeboer@uva.nl>) id
+ 1N0aPH-0000rO-96 for eduarddrenth@solcon.nl; Wed, 21 Oct 2009 14:35:11 +0200
+Received: from pc-vlab17.science.uva.nl [146.50.22.126] by
+ imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38). id
+ n9LCZ6wM026769; Wed, 21 Oct 2009 14:35:07 +0200
+X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
+X-URL: http://www.science.uva.nl/
+Message-ID: <4ADEFFFB.8090200@uva.nl>
+Date: Wed, 21 Oct 2009 14:35:07 +0200
+From: "Piter T. de Boer" <ptdeboer@uva.nl>
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+MIME-Version: 1.0
+To: Eduard Drenth <eduarddrenth@solcon.nl>
+Subject: Re: design plugin agents amc
+References: <1256127006.3152.57.camel@localhost>
+In-Reply-To: <1256127006.3152.57.camel@localhost>
+Content-Type: multipart/alternative; boundary="------------050905090704030209080405"
+X-Virus-Scanned: by amavisd-new
+X-Evolution-Source: pop://eduarddrenth@pop.solcon.nl/
+
+This is a multi-part message in MIME format.
+--------------050905090704030209080405
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-MIME-Autoconverted: from 8bit to quoted-printable by imap.science.uva.nl
+ id n9LCZ6wM026769
+Content-Transfer-Encoding: 8bit
+
+Hoi Eduard,
+
+Mail naar mij (zonder CC naar vlet-dev of e.d.) mag wel in het nederlands.
+Ik heb gekeken naar de ResourceEvents, maar de huidige events zijn URI 
+(VRL) based.
+Dus weet je niet of ze van MOTEUR afkomen als je alleen naar de URI kijkt.
+Ik zou mijn ResourseEvent API kunnen uitbreiden, maar je kunt nadenken 
+over een eigen event systeem.
+Vergeet niet dat de Moteur plugin of Moteur service zelf uitgebreid kan 
+worden met een custom event systeem.
+Jou agent platform bijvoorbeeld.
+
+Over de VBrowser startup:
+Als de VBrowser opstart laad deze de plugins en creeërt één instantie 
+van een plugin, zodat
+deze geregisteerd kan worden in de Viewer Registry van de VBrowser.
+In /pseudo/ code:
+
+    ViewerPlugin instance=new ViewerPlugin();
+    name=instance.getName();
+    mimertypes=instance.getMimeTypes();
+    Register(name,mimetypes,ViewerPlugin.class)
+
+(Java Bean achtige intializatie)
+
+Als je dus gewone static{...} class init code gebruikt kun je je eigen 
+(static) registratie doen.
+Je kunt evt. ook in de constructor een 'registerIfNotRegistered' methode 
+aanroepen, maar static{...} code kan ok.
+Let erop dat je dus een lege default constructor moet hebben in je plugin.
+Doe zo weinig mogelijk in deze constructor en initializeer de Viewer in 
+initViewer();
+
+Over de ViewerPlugin registratie. Plugins staan in VLET_INSTALL/lib/plugins
+Elke plugin heeft een eigen directory, bijvoorbeeld:
+
+     $VLET_INSTALL/lib/plugin/nl.uva.vlet.gui.cobraviewer/
+
+Deze directory heeft een optionele property file:
+
+    plugin.prop
+
+Deze bevat op dit moment minimale configuratie opties voor de Plugin 
+registratie die de VBrowser leest.
+Belangrijkste property is de 'mainclass' :
+
+    viewer.mainclass=nl.uva.vlet.gui.cobraviewer.CobraHTMLViewer
+
+Deze bepaald welke ViewerPlugin class geinstancieerd moet worden.
+
+Verder kan ik altijd de ViewerPlugin API uitbreiden op verzoek.
+
+Piter.
+
+
+Eduard Drenth wrote:
+> Hi,
+>
+> In my last I proposed a design which I abandoned in the mean time. New 
+> design:
+>
+> public class MOTEURWorkflowListener implements ResourceEventListener
+>
+> this class will capture and analyze events to see whether or not to 
+> signal a MOTEUREventHandler.
+>
+> the MOTEUREventHandler will signal some class that has a gui.
+>
+> My questions to you:
+>
+> - What do you think of this setup?
+> - Is it possible (and how) to register a ResourceEventListener upon 
+> VBrowser startup?
+> - Is there a default approach to deal with configuration (jconfig, 
+> property file,...)?
+>
+> Regards,
+>
+> Eduard 
+
+
+--------------050905090704030209080405
+Content-Type: text/html; charset=UTF-8
+X-MIME-Autoconverted: from 8bit to quoted-printable by imap.science.uva.nl
+ id n9LCZ6wM026769
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type">
+</head>
+<body bgcolor="#ffffff" text="#000000">
+Hoi Eduard, <br>
+<br>
+Mail naar mij (zonder CC naar vlet-dev of e.d.) mag wel in het
+nederlands. <br>
+Ik heb gekeken naar de ResourceEvents, maar de huidige events zijn URI
+(VRL) based. <br>
+Dus weet je niet of ze van MOTEUR afkomen als je alleen naar de URI
+kijkt. <br>
+Ik zou mijn ResourseEvent API kunnen uitbreiden, maar je kunt nadenken
+over een eigen event systeem. <br>
+Vergeet niet dat de Moteur plugin of Moteur service zelf uitgebreid kan
+worden met een custom event systeem. <br>
+Jou agent platform bijvoorbeeld. <br>
+<br>
+Over de VBrowser startup:<br>
+Als de VBrowser opstart laad deze de plugins en creeërt één instantie
+van een plugin, zodat <br>
+deze geregisteerd kan worden in de Viewer Registry van de VBrowser. <br>
+In <i>pseudo</i> code: <br>
+<br>
+<blockquote><tt>ViewerPlugin instance=new ViewerPlugin(); </tt><br>
+  <tt>name=instance.getName(); </tt><br>
+  <tt>mimertypes=instance.getMimeTypes(); <br>
+Register(name,mimetypes,ViewerPlugin.class) <br>
+  <br>
+  </tt></blockquote>
+(Java Bean achtige intializatie) <br>
+<br>
+Als je dus gewone static{...} class init code gebruikt kun je je eigen
+(static) registratie doen. <br>
+Je kunt evt. ook in de constructor een 'registerIfNotRegistered'
+methode aanroepen, maar static{...} code kan ok. <br>
+Let erop dat je dus een lege default constructor moet hebben in je
+plugin. <br>
+Doe zo weinig mogelijk in deze constructor en initializeer de Viewer in
+initViewer(); <br>
+<br>
+Over de ViewerPlugin registratie. Plugins staan in
+VLET_INSTALL/lib/plugins<br>
+Elke plugin heeft een eigen directory, bijvoorbeeld: <br>
+<br>
+    <tt> $VLET_INSTALL/lib/plugin/nl.uva.vlet.gui.cobraviewer/<br>
+<br>
+</tt>Deze directory heeft een optionele property file: <br>
+<br>
+    <tt>plugin.prop</tt><br>
+<br>
+Deze bevat op dit moment minimale configuratie opties voor de Plugin
+registratie die de VBrowser leest. <br>
+Belangrijkste property is de 'mainclass' :<tt><br>
+</tt>
+<blockquote><tt>viewer.mainclass=nl.uva.vlet.gui.cobraviewer.CobraHTMLViewer</tt><br>
+</blockquote>
+Deze bepaald welke ViewerPlugin class geinstancieerd moet worden. <br>
+<br>
+Verder kan ik altijd de ViewerPlugin API uitbreiden op verzoek. <br>
+<br>
+Piter. <br>
+<br>
+<br>
+Eduard Drenth wrote:
+<blockquote cite="mid:1256127006.3152.57.camel@localhost" type="cite">
+  <meta http-equiv="Content-Type" content="text/html; ">
+  <meta name="GENERATOR" content="GtkHTML/3.26.0">
+Hi,<br>
+  <br>
+In my last I proposed a design which I abandoned in the mean time. New
+design:<br>
+  <br>
+public class MOTEURWorkflowListener implements ResourceEventListener<br>
+  <br>
+this class will capture and analyze events to see whether or not to
+signal a MOTEUREventHandler.<br>
+  <br>
+the MOTEUREventHandler will signal some class that has a gui.<br>
+  <br>
+My questions to you:<br>
+  <br>
+- What do you think of this setup?<br>
+- Is it possible (and how) to register a ResourceEventListener upon
+VBrowser startup?<br>
+- Is there a default approach to deal with configuration (jconfig,
+property file,...)?<br>
+  <br>
+Regards,<br>
+  <br>
+Eduard
+</blockquote>
+<br>
+</body>
+</html>
+
+--------------050905090704030209080405--

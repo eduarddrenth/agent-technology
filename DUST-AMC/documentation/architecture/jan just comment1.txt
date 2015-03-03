@@ -1,0 +1,111 @@
+Hi Eduard,
+
+I'm a bit confused ... see comments inline
+
+Drenth, Eduard wrote:
+>
+> Can you please share your ideas and knowledge on the following.
+>
+> We started the development of agent based user support for the AMC.
+>
+> The general idea is to introduce a agent platform.
+>
+> Such a platform consists out of jvm's with agents inside. The jvm's
+> connect over the network. The agents can exchange messages. Agents
+> register with the platform, in a central container living in a
+> separate jvm.
+>
+> One of the requirements is to be able to access stdout and stderr of
+> the job (possibly also other info).
+>
+> Simplified we can do the following, important to note is that we do a
+> callback from within the grid to the agent platform (compare diane
+> solution):
+>
+> AMC domain
+>
+>   1 introduce a plugin in VBrowser
+>     a launch one agent with a gui component for notification
+>     b launch an agent for each workflow started
+>   2 introduce an agent for a moteur instance
+>     a launch one agent for each moteur instance
+>     b keep this agent alive when a workflow fails
+>
+what exactly is 'the AMC domain'
+So you want to run an agent on the machine where a MOTEUR instance is
+running? why would it die when a (grid) job fails?
+
+> GRID domain
+>
+>   3 introduce an agent on a workernode
+>     a start an agent for each job launched by moteur
+>     b keep this agent alive when a job fails
+>
+> In this way we can start exchanging information between VBrowser,
+> Moteur and workernode.
+>
+> Especially 2b and 3b need extra attention.
+>
+> 2b options/problems:
+>
+> - start jvm/agent from within the job shell
+> Problem: when the job fails the shell exits, so does the jvm/agent,
+> nohup or the like is no option
+>
+which job shell is this? perhaps I am not fully aware of how MOTEUR
+instances are launched
+
+>
+> - wrap the job shell in a jvm/agent shell
+> Problem: change current behavior on the grid, the exit status of a job
+> will be delayed
+> Problem: modification needed in moteur
+>
+> - start the jvm/agent directly after the actual job as a separate job
+> Problem: Can we make sure that the agent job runs on the same
+> workernode as the actual job
+>
+no
+>
+> Problem: Can the agent-job access information of the actual job
+>
+if you're on the same worker node: yes but you'd have a hard time to
+figure out where the information is
+>
+> Problem: modification needed in moteur
+>
+> - have a agent container running on CE/HN (elsewhere), let this
+> container start the agent (signal from within job)
+>
+Agents will not run on the CE/HN. Period.
+>
+> Problem: Can the agent-job access information of the actual job
+>
+> - start jvm/agent from within the job shell and let it pipe stdout and
+> stdin of the job to where we need it
+> Problem: overhead
+> Problem: not a very flexible way to go       
+>
+> 3b options/problems
+>
+> - start jvm/agent from within moteur
+> - wrap moteur in a jvm/agent shell
+> - have a agent container running next to moteur, let this container
+> start the agent
+>
+>
+the idea here is to have MOTEUR start an 'agent' job and this 'agent'
+job will then start the actual payload. This is more or less similar to
+the way Diane works. However, be aware that the 'agent' must not consume
+too many resources while the actual job is running. Most sites keep
+track of CPU usage and if your job uses (significantly) more than 100%
+CPU (i.e. uses more than 1 core) then currently your job can get
+slaughtered.
+
+cheers,
+
+JJK / Jan Just Keijser
+Nikhef
+Amsterdam
+
+

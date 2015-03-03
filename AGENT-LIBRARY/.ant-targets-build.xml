@@ -1,0 +1,10 @@
+GENERIC.clean
+GENERIC.deploy
+GENERIC.prepare
+clean
+compile
+deploy
+jar
+prepare
+run.maincontainer
+testcompile

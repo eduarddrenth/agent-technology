@@ -1,0 +1,5 @@
+cns.lib.dir=../../../AGENT-LIBRARY
+jar.name=DUST-AMC.jar
+main.class=com.logica.amc.moteur.MOTEURAgent
+main.class.user=com.logica.amc.user.WorkflowAgentUser
+main.class.grid=com.logica.amc.workernode.WorkerNodeAgent

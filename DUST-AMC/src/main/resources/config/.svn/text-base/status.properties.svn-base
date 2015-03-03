@@ -1,0 +1,21 @@
+# LET OP, paaterns worden op volgorde afgehandeld! volgorde maakt uit
+#
+start=Launching the Workflow
+jobstart=Status of job.*READY
+joberror=Status of job.*ERROR
+jobsuccess=Status of job.*COMPLETED
+update=RUN] Submitting job
+update=has submitted task
+update=RUN] Status of job
+resubmit=submitting the job again
+update=No more resubmission
+update=Total execution time of the workflow
+
+# success of workflow is not in the logfile, the only way is to check if all jobs succeeded
+#
+# so the lines below cause the monitoring of the workflow to finish
+# wether or not the workflow succeeded is determined by checking if all jobs succeeded
+#
+# voeg een regel voor 1 van beide keys toe als je wilt dat de workflow op grond van een value als beeindigd beschouwd wordt
+success=The workflow is done
+error=Status of job.*UNKNOWN

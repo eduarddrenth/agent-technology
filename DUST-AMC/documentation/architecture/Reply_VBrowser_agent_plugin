@@ -1,0 +1,338 @@
+From ptdeboer@uva.nl Tue Oct 20 13:36:11 2009
+Received: from [145.100.36.2] (helo=mh1.sara.nl) by mx03.solcon.nl with
+ esmtp (Exim 4.60) (envelope-from <vlet-develop-bounces@lists.vl-e.nl>) id
+ 1N0D0d-0005kn-O6 for eduarddrenth@solcon.nl; Tue, 20 Oct 2009 13:36:11 +0200
+Received: from lists.vl-e.nl ([145.100.29.242]) by mh1.sara.nl with esmtp
+ (Exim 4.63) (envelope-from <vlet-develop-bounces@lists.vl-e.nl>) id
+ 1N0D02-00009y-Uk; Tue, 20 Oct 2009 13:35:34 +0200
+Received: from lists.vl-e.nl (lists.vl-e.nl [145.100.29.242]) by
+ lists.vl-e.nl (Postfix) with ESMTP id 0FC8BA13BA5; Tue, 20 Oct 2009
+ 13:33:56 +0200 (CEST)
+X-Original-To: vlet-develop@lists.vl-e.nl
+Delivered-To: vlet-develop@lists.vl-e.nl
+Received: from mx2.sara.nl (mx2.sara.nl [85.90.64.52]) by lists.vl-e.nl
+ (Postfix) with ESMTP id 889BFA214CF for <vlet-develop@lists.vl-e.nl>; Tue,
+ 20 Oct 2009 13:33:55 +0200 (CEST)
+Received: from imap.science.uva.nl ([146.50.4.51]) by mx2.sara.nl with
+ esmtp (Exim 4.63) (envelope-from <ptdeboer@uva.nl>) id 1N0CyP-0006jH-CW for
+ vlet-develop@lists.vl-e.nl; Tue, 20 Oct 2009 13:33:55 +0200
+Received: from pc-vlab17.science.uva.nl [146.50.22.126] by
+ imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38). id
+ n9KBXXvf018870; Tue, 20 Oct 2009 13:33:33 +0200
+X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
+X-URL: http://www.science.uva.nl/
+Message-ID: <4ADDA00D.10109@uva.nl>
+Date: Tue, 20 Oct 2009 13:33:33 +0200
+From: "Piter T. de Boer" <ptdeboer@uva.nl>
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+MIME-Version: 1.0
+To: "Drenth, Eduard" <eduard.drenth@logica.com>
+References:
+	 <AD9C189BA7790145B391D66090351014038B42E9@nl-ex008.groupinfra.com>
+In-Reply-To: <AD9C189BA7790145B391D66090351014038B42E9@nl-ex008.groupinfra.com>
+X-Virus-Scanned: by amavisd-new
+X-Spam-Score: (-2.6) BAYES_00,HTML_MESSAGE
+Cc: "vlet-develop@lists.vl-e.nl" <vlet-develop@lists.vl-e.nl>
+Subject: Re: [Vlet-develop] VBrowser agent plugin
+X-BeenThere: vlet-develop@lists.vl-e.nl
+X-Mailman-Version: 2.1.11
+Precedence: list
+Reply-To: vlet-develop@lists.vl-e.nl
+List-Id: <vlet-develop.lists.vl-e.nl>
+List-Unsubscribe: <https://lists.vl-e.nl/mailman/options/vlet-develop>,
+ <mailto:vlet-develop-request@lists.vl-e.nl?subject=unsubscribe>
+List-Archive: <https://lists.vl-e.nl/mailman/private/vlet-develop>
+List-Post: <mailto:vlet-develop@lists.vl-e.nl>
+List-Help: <mailto:vlet-develop-request@lists.vl-e.nl?subject=help>
+List-Subscribe: <https://lists.vl-e.nl/mailman/listinfo/vlet-develop>,
+ <mailto:vlet-develop-request@lists.vl-e.nl?subject=subscribe>
+Content-Type: multipart/mixed; boundary="===============0478084003=="
+Mime-version: 1.0
+Errors-To: vlet-develop-bounces@lists.vl-e.nl
+X-Evolution-Source: pop://eduarddrenth@pop.solcon.nl/
+
+This is a multi-part message in MIME format.
+--===============0478084003==
+Content-Type: multipart/alternative; boundary="------------010409040900070607040409"
+
+This is a multi-part message in MIME format.
+--------------010409040900070607040409
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+X-MIME-Autoconverted: from 8bit to quoted-printable by imap.science.uva.nl
+ id n9KBXXvf018870
+Content-Transfer-Encoding: 8bit
+
+Hello Eduard,
+
+In the VBrowser there are two ways to fire events.
+One is a 'browse' event or 'hyperlink' event. This is similar as 
+clicking on a link, this makes that the
+vbrowser opens the location which is 'fired' and then is shown in the 
+main browse panel.
+The Moteur Viewer uses this code to do that:
+
+    fireHyperLinkEvent(ViewerEvent.createHyperLinkEvent(this,vrl));
+
+But this is intended for direct GUI events and might not what you want.
+
+For generic 'Resource' events you can use the "Virtual Resource System" 
+or VRS Events
+You can signal all possible listeners that a new resource has 
+appeared/changed/or deleted, which might
+be more interesting and can be used between multiple resources and plugins.
+WebService enabled events could be linked to this event mechanism as 
+well (although I have no support for that yet).
+
+The general contract to fire an event from a GUI Plugin is:
+
+    {
+        VRSContext ctx=UIGlobal.getVRSContext();
+        VRL parentVRL=<...>; 
+        VRL newVRL=<...>;
+        ResourceEvent
+    event=ResourceEvent.createChildAddedEvent(parentVRL, newVRL);
+        ctx.fireEvent(event);
+    }
+
+
+To create an event listener implement the interface:  
+nl.uva.vlet.vrs.ResourceEventListener
+Create an Register it as follows:
+
+
+    {
+         ResourceEventListener listener=new ResourceEventListener() {
+              public void notifyResourceEvent(ResourceEvent event) {
+                   System.out.println("Handle Event:"+event);
+              }
+         };
+               
+         ctx.addResourceEventListener(listener);
+    }
+
+
+ From a GUI plugin you have to use the VRSContext from 
+UIGlobal.getVRSContext() and use that context to
+interact with the VRS.
+You can also use UIGlobal.getVRSClient() or UIGlobal.getVFSClient() to 
+get a VRSClient or VFSClient.
+
+Right now I'm cleaning up the ResourceEvent interface so it is more 
+clear which method you can use (and which not)
+Also the moteur client has to fire a VRS event. I can add this code easily.
+
+Also I noticed there is only a "CHILD_ADDED" event which requires a 
+mandatory Parent VRL.
+I'll add a "NEW_RESOURCE" event which doesn't require a parent VRL to 
+make this event interface more generic.
+(This shows how filesystem oriented the VBrowser and it's core VRS API 
+re !)
+
+I'll notify you once I added this resource event and I will post the 
+example code, but in the mean time you can already take
+a look a the code example above.
+
+Piter.
+
+
+Drenth, Eduard wrote:
+>
+> Hi,
+>
+> Can you help me hook up an agent with the start of a MOTEUR workflow?
+>
+> Here 
+> http://amc-app1.amc.sara.nl/twiki/bin/view/EBioScience/DUSTProject/DustPilotProjectDev 
+> you can read how I want to build my application.
+>
+> Basically I would like to write a VBrowser plugin that somehow is 
+> notified when a MOTEUR workflow starts.
+>
+> If I look at PanelConfigWorkflow#runWorkflow I see that 
+> informChangeLinkVRL is fired.
+>
+> Do you think it is a possibility to register my plugin with VBrowser 
+> in a way that it receives a callback?
+>
+> Regards,
+>
+> Eduard
+>
+> ------------------------------------------------
+> Eduard Drenth
+> Logica Groningen
+> Java / XML specialist
+> 06-20943428
+>
+>
+>
+> Please help Logica to respect the environment by not printing this 
+> email / Pour contribuer comme Logica au respect de l'environnement, 
+> merci de ne pas imprimer ce mail / Bitte drucken Sie diese Nachricht 
+> nicht aus und helfen Sie so Logica dabei, die Umwelt zu schützen. / 
+> Por favor ajude a Logica a respeitar o ambiente não imprimindo este 
+> correio electrónico. This e-mail and any attachment is for authorised 
+> use by the intended recipient(s) only. It may contain proprietary 
+> material, confidential information and/or be subject to legal 
+> privilege. It should not be copied, disclosed to, retained or used by, 
+> any other party. If you are not an intended recipient then please 
+> promptly delete this e-mail and any attachment and all copies and 
+> inform the sender. Thank you. 
+
+
+--------------010409040900070607040409
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+</head>
+<body bgcolor="#ffffff" text="#000000">
+Hello Eduard, <br>
+<br>
+In the VBrowser there are two ways to fire events. <br>
+One is a 'browse' event or 'hyperlink' event. This is similar as
+clicking on a link, this makes that the<br>
+vbrowser opens the location which is 'fired' and then is shown in the
+main browse panel. <br>
+The Moteur Viewer uses this code to do that: <br>
+<blockquote><tt>fireHyperLinkEvent(ViewerEvent.createHyperLinkEvent(this,vrl));</tt><br>
+</blockquote>
+But this is intended for direct GUI events and might not what you want.
+<br>
+<br>
+For generic 'Resource' events you can use the "Virtual Resource System"
+or VRS Events <br>
+You can signal all possible listeners that a new resource has
+appeared/changed/or deleted, which might<br>
+be more interesting and can be used between multiple resources and
+plugins. <br>
+WebService enabled events could be linked to this event mechanism as
+well (although I have no support for that yet). <br>
+<br>
+The general contract to fire an event from a GUI Plugin is: <br>
+<blockquote><tt>{<br>
+&nbsp;&nbsp;&nbsp; VRSContext ctx=UIGlobal.getVRSContext();</tt><br>
+  <tt>&nbsp;&nbsp;&nbsp; VRL parentVRL=&lt;...&gt;;&nbsp; </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp; VRL newVRL=&lt;...&gt;; </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp; ResourceEvent
+event=ResourceEvent.createChildAddedEvent(parentVRL, newVRL); </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp; ctx.fireEvent(event); </tt><br>
+  <tt>}<br>
+  </tt></blockquote>
+<br>
+To create an event listener implement the interface:&nbsp;
+nl.uva.vlet.vrs.ResourceEventListener<br>
+Create an Register it as follows: <br>
+<tt><br>
+<br>
+</tt>
+<blockquote><tt>{<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ResourceEventListener listener=new ResourceEventListener() {</tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void notifyResourceEvent(ResourceEvent event) {</tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; System.out.println("Handle Event:"+event); </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp; }; </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </tt><br>
+  <tt>&nbsp;&nbsp;&nbsp;&nbsp; ctx.addResourceEventListener(listener); <br>
+}<br>
+  </tt></blockquote>
+<br>
+>From a GUI plugin you have to use the VRSContext from
+UIGlobal.getVRSContext() and use that context to <br>
+interact with the VRS. <br>
+You can also use UIGlobal.getVRSClient() or UIGlobal.getVFSClient() to
+get a VRSClient or VFSClient. <br>
+<br>
+Right now I'm cleaning up the ResourceEvent interface so it is more
+clear which method you can use (and which not) <br>
+Also the moteur client has to fire a VRS event. I can add this code
+easily. <br>
+<br>
+Also I noticed there is only a "CHILD_ADDED" event which requires a
+mandatory Parent VRL. <br>
+I'll add a "NEW_RESOURCE" event which doesn't require a parent VRL to
+make this event interface more generic. <br>
+(This shows how filesystem oriented the VBrowser and it's core VRS API
+re !) <br>
+<br>
+I'll notify you once I added this resource event and I will post the
+example code, but in the mean time you can already take<br>
+a look a the code example above. <br>
+<br>
+Piter. <br>
+<br>
+<br>
+Drenth, Eduard wrote:
+<blockquote
+ cite="mid:AD9C189BA7790145B391D66090351014038B42E9@nl-ex008.groupinfra.com"
+ type="cite">
+  <meta http-equiv="Content-Type" content="text/html; ">
+  <meta name="Generator"
+ content="MS Exchange Server version 6.5.7654.12">
+  <title>VBrowser agent plugin</title>
+<!-- Converted from text/plain format -->
+  <p><font size="2">Hi,<br>
+  <br>
+Can you help me hook up an agent with the start of a MOTEUR workflow?<br>
+  <br>
+Here <a moz-do-not-send="true"
+ href="http://amc-app1.amc.sara.nl/twiki/bin/view/EBioScience/DUSTProject/DustPilotProjectDev">http://amc-app1.amc.sara.nl/twiki/bin/view/EBioScience/DUSTProject/DustPilotProjectDev</a>
+you can read how I want to build my application.<br>
+  <br>
+Basically I would like to write a VBrowser plugin that somehow is
+notified when a MOTEUR workflow starts.<br>
+  <br>
+If I look at PanelConfigWorkflow#runWorkflow I see that
+informChangeLinkVRL is fired.<br>
+  <br>
+Do you think it is a possibility to register my plugin with VBrowser in
+a way that it receives a callback?<br>
+  <br>
+Regards,<br>
+  <br>
+Eduard<br>
+  <br>
+------------------------------------------------<br>
+Eduard Drenth<br>
+Logica Groningen<br>
+Java / XML specialist<br>
+06-20943428<br>
+  <br>
+  <br>
+  </font>
+  </p>
+  <br clear="all">
+Please help Logica to respect the environment by not printing this
+email / Pour contribuer comme Logica au respect de l'environnement,
+merci de ne pas imprimer ce mail / Bitte drucken Sie diese Nachricht
+nicht aus und helfen Sie so Logica dabei, die Umwelt zu sch&uuml;tzen. / Por
+favor ajude a Logica a respeitar o ambiente n&atilde;o imprimindo este correio
+electr&oacute;nico.
+This e-mail and any attachment is for authorised use by the intended
+recipient(s) only. It may contain proprietary material, confidential
+information and/or be subject to legal privilege. It should not be
+copied, disclosed to, retained or used by, any other party. If you are
+not an intended recipient then please promptly delete this e-mail and
+any attachment and all copies and inform the sender. Thank you.
+</blockquote>
+<br>
+</body>
+</html>
+
+--------------010409040900070607040409--
+
+--===============0478084003==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+
+_______________________________________________
+VLeT-develop mailing list
+VLeT-develop@lists.vl-e.nl
+https://lists.vl-e.nl/mailman/listinfo/vlet-develop
+
+--===============0478084003==--
