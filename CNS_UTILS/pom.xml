@@ -15,6 +15,11 @@
 
    <dependencies>
       <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>cnslibrary</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
          <groupId>commons-logging</groupId>
          <artifactId>commons-logging</artifactId>
          <version>1.2</version>

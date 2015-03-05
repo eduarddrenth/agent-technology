@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.logica.cns.generic.CNSContext;
 import org.logica.cns.generic.JadeHelper;
+import org.logica.cns.util.CNSContext;
 
 /**
  *

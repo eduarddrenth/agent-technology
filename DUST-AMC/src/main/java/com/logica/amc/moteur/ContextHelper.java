@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.logica.cns.generic.JadeHelper;
@@ -96,7 +93,7 @@ class ContextHelper {
     static String findFullName(String user) {
         try {
             return loadUserConfig(user).getFullName();
-        } catch (ConfigurationException ex) {
+        } catch (org.apache.commons.configuration.ConfigurationException ex) {
             log.error("unable to find fullname for " + user, ex);
             return null;
         }
@@ -105,7 +102,7 @@ class ContextHelper {
     static String findEmail(String user, String event) {
         try {
             return loadUserConfig(user).getUserEmail(event);
-        } catch (ConfigurationException ex) {
+        } catch (org.apache.commons.configuration.ConfigurationException ex) {
             log.error("unable to find email for " + user + ", event " + event, ex);
             return null;
         }
@@ -114,13 +111,13 @@ class ContextHelper {
     static String findAdminEmail(String user, String event) {
         try {
             return loadUserConfig(user).getAdminEmail(event);
-        } catch (ConfigurationException ex) {
+        } catch (org.apache.commons.configuration.ConfigurationException ex) {
             log.error("unable to find admin email for " + user + ", event " + event, ex);
             return null;
         }
     }
 
-    private static UserConfig loadUserConfig(String user) throws ConfigurationException {
+    private static UserConfig loadUserConfig(String user) throws org.apache.commons.configuration.ConfigurationException {
         if (!userConfigs.containsKey(user)) {
             File conf = new File(USERCONFIG_PREFIX + user + ".properties");
             if (conf.exists()) {

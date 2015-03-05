@@ -24,15 +24,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.logica.cns.generic.CNSAgentInitializer;
-import org.logica.cns.generic.CNSContext;
 import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.JadeHelper;
+import org.logica.cns.util.CNSContext;
 
 /**
  *

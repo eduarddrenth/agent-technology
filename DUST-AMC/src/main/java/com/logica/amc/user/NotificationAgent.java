@@ -13,6 +13,7 @@ import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.JadeHelper;
 import org.logica.cns.mail.MailSender;
 
+
 /**
  *
  * @author Eduard Drenth: Logica, 21-okt-2009
@@ -54,8 +55,8 @@ public class NotificationAgent extends AMCAgent {
                 ms.send(mails, new String[]{}, new String[]{}, JadeHelper.getProperty(SENDER), subject + "", content + "", 3);
             } catch (IllegalArgumentException illegalArgumentException) {
                 log.warn("unable to send (" + content + ") to " + emails, illegalArgumentException);
-            } catch (MessagingException messagingException) {
-                log.warn("unable to send (" + content + ") to " + emails, messagingException);
+            } catch (MessagingException ex) {
+                log.warn("unable to send (" + content + ") to " + emails, ex);
             }
         }
     }

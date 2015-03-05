@@ -32,11 +32,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.logica.cns.generic.AgentsFoundHandler;
 import org.logica.cns.generic.CNSAgentInitializer;
 import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.JadeHelper;
+import org.logica.cns.generic.ServiceFoundHandler;
 import org.logica.cns.io.Tail;
 import org.logica.cns.io.Tail.Result;
 
@@ -94,7 +94,7 @@ public class WorkflowAgentMOTEUR extends AMCAgent implements Observer {
             if (predicate instanceof AgentsPrepared) {
                 AgentsPrepared ap = (AgentsPrepared) predicate;
                 if (ap.getWorkflow().equals(getLocalName())) {
-                    CNSHelper.executeWhenFound(WorkflowAgentMOTEUR.this, new AgentsFoundHandler() {
+                    CNSHelper.executeWhenFound(WorkflowAgentMOTEUR.this, new ServiceFoundHandler() {
 
                         @Override
                         public void handleFound(Agent a, DFAgentDescription[] dads) {

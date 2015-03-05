@@ -14,16 +14,24 @@
 
    <dependencies>
       <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>cnslibrary</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>cnsutils</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-configuration</groupId>
+         <artifactId>commons-configuration</artifactId>
+         <version>1.10</version>
+      </dependency>
+      <dependency>
          <groupId>javax.mail</groupId>
          <artifactId>mail</artifactId>
          <version>1.4.7</version>
-         <optional>true</optional>
-      </dependency>
-      <dependency>
-         <groupId>javax.activation</groupId>
-         <artifactId>activation</artifactId>
-         <version>1.1.1</version>
-         <optional>true</optional>
       </dependency>
    </dependencies>
   

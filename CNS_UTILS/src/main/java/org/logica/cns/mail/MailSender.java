@@ -385,8 +385,8 @@ public class MailSender {
     }
 
     public void send(String[] to, String[] cc, String[] bcc, String from, String subject,
-            String message, int priority)
-            throws MessagingException {
+            String message, int priority) throws MessagingException
+             {
         msg.setFrom(new InternetAddress(from));
 
         // Convert the to address strings to an array of InternetAddress objects:

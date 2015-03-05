@@ -17,6 +17,7 @@ import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.CNSMessageHandlerImpl;
 import org.logica.cns.generic.CNSReceiveMessagesBehavior;
+import org.logica.cns.util.CNSContext;
 
 /**
  *
@@ -44,11 +45,13 @@ public abstract class AMCAgent extends Agent {
     protected  CNSMessageHandler getMessageHandler() {
             return new AMCHandler();
     }
+    
+    private CNSContext context;
 
     @Override
     protected void setup() {
         super.setup();
-        context = CNSContext.fromArgs((String[]) ((getArguments() == null) ? new String[]{} : getArguments()));
+        context = CNSContext.fromArgs((String[]) ((getArguments()== null) ? new String[]{} : getArguments()));
         CNSAgentInitializer init = new CNSAgentInitializerImpl(this);
         init.addOntology(AMCOntology.getInstance());
         fillOntology(init);
@@ -75,5 +78,9 @@ public abstract class AMCAgent extends Agent {
 
 
     protected abstract void handleStatus(StatusIs status);
+
+   public CNSContext getCNSContext() {
+      return context;
+   }
 
 }

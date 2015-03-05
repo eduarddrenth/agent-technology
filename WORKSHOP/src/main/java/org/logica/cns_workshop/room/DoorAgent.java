@@ -12,12 +12,12 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.logica.cns.generic.AgentsFoundHandler;
 import org.logica.cns.generic.CNSAgentInitializer;
 import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.CNSMessageHandlerImpl;
 import org.logica.cns.generic.JadeHelper;
+import org.logica.cns.generic.ServiceFoundHandler;
 import org.logica.cns_workshop.WorkshopAgent;
 import org.logica.cns_workshop.communication.Door;
 import org.logica.cns_workshop.communication.LocatedAt;
@@ -45,7 +45,7 @@ public class DoorAgent extends WorkshopAgent {
         door.setX(Integer.parseInt(JadeHelper.getProperty(X)));
         door.setY(Integer.parseInt(JadeHelper.getProperty(Y)));
         door.setAID(getAID());
-        CNSHelper.executeWhenFound(this, new AgentsFoundHandler() {
+        CNSHelper.executeWhenFound(this, new ServiceFoundHandler() {
 
             @Override
             public void handleFound(Agent a, DFAgentDescription[] dads) {
