@@ -1,8 +1,12 @@
 package org.logica.cns_workshop.gui;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -16,8 +20,6 @@ public class GUI extends JFrame {
    private static final long serialVersionUID = 1L;
    private int w = 300;
    private int h = 300;
-   private MemoryImage image = null;
-   private MemoryImagePanel panel = null;
    private static GUI me = new GUI();
 
    public static GUI getInstance() {
@@ -26,6 +28,9 @@ public class GUI extends JFrame {
       }
       return me;
    }
+   
+   private final Graphics2D g2;
+   private final BufferedImage img;
 
    private GUI() {
       w = Integer.parseInt(JadeHelper.getProperty(W));
@@ -42,32 +47,53 @@ public class GUI extends JFrame {
 
       setSize(w, h);
       setVisible(true);
-
-      image = new MemoryImage(w, h);
-      panel = new MemoryImagePanel(image);
-      image.cls(Color.yellow.getRGB());
-      getContentPane().add(panel);
-
+      img = new BufferedImage(w*3, h*3, BufferedImage.TYPE_INT_RGB);
+      g2 = img.createGraphics();
+      g2.setRenderingHint(
+          RenderingHints.KEY_ANTIALIASING,
+          RenderingHints.VALUE_ANTIALIAS_ON);
+      g2.scale(3, 3);
    }
 
-   public void clearImage() {
-      image.cls(Color.lightGray.getRGB());
+   public void cls(int value) {
+      g2.setColor(new Color(value));
+      g2.fillRect(0, 0, w*2, h*2);
+   }
+
+   @Override
+   public void paint(Graphics g) {
+      g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
    }
 
    public void updateGui() {
       SwingUtilities.invokeLater(new Runnable() {
 
          public void run() {
-            panel.repaint();
+            repaint();
          }
       });
    }
 
+   public void drawSmiley(int x, int y, Color color) {
+      g2.setColor(color);
+      g2.drawOval(x, y, 10, 10);
+      g2.setColor(Color.blue);
+      g2.fillOval(x + 3, y + 3, 2, 2);
+      g2.fillOval(x + 7, y + 3, 2, 2);
+      g2.setColor(Color.red);
+      g2.drawLine(x + 3, y + 7, x + 7, y + 7);
+   }
+
+   public void drawDoor(int x, int y, Color color) {
+      g2.setColor(color);
+      g2.drawRect(x, y, 10, 10);
+   }
+
    public void drawSmiley(int x, int y, int c) {
-      image.drawSmiley(x, y, Color.decode(String.valueOf(c)));
+      drawSmiley(x, y, Color.decode(String.valueOf(c)));
    }
 
    public void drawDoor(Door door) {
-      image.drawDoor(door.getX(), door.getY(), Color.red);
+      drawDoor(door.getX(), door.getY(), Color.red);
    }
 }

@@ -9,6 +9,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
@@ -165,7 +166,7 @@ public class RoomAgent extends WorkshopAgent {
 
     private void draw(GUI gui) {
         if (door != null) {
-            gui.clearImage();
+            gui.cls(Color.lightGray.getRGB());
             for (ColorPoint cp : smileys.values()) {
                 gui.drawSmiley(cp.x, cp.y, cp.color);
             }
