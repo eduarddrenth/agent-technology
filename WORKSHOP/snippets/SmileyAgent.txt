@@ -8,7 +8,7 @@
             doDelete();
         }
 
-3
+2
 
             log.info(getAID().getName() + " informing neighbours");
             getContentManager().fillContent(smsg, doorLoc);
