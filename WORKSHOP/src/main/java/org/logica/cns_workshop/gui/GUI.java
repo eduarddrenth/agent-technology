@@ -49,9 +49,9 @@ public class GUI extends JFrame {
       setVisible(true);
       img = new BufferedImage(w*3, h*3, BufferedImage.TYPE_INT_RGB);
       g2 = img.createGraphics();
-      g2.setRenderingHint(
-          RenderingHints.KEY_ANTIALIASING,
-          RenderingHints.VALUE_ANTIALIAS_ON);
+//      g2.setRenderingHint(
+//          RenderingHints.KEY_ANTIALIASING,
+//          RenderingHints.VALUE_ANTIALIAS_ON);
       g2.scale(3, 3);
    }
 
@@ -78,10 +78,10 @@ public class GUI extends JFrame {
       g2.setColor(color);
       g2.drawOval(x, y, 10, 10);
       g2.setColor(Color.blue);
-      g2.fillOval(x + 3, y + 3, 2, 2);
-      g2.fillOval(x + 7, y + 3, 2, 2);
+      g2.fillOval(x + 2, y + 3, 2, 2);
+      g2.fillOval(x + 6, y + 3, 2, 2);
       g2.setColor(Color.red);
-      g2.drawLine(x + 3, y + 7, x + 7, y + 7);
+      g2.drawArc(x + 2, y + 5, 6, 3,180,180);
    }
 
    public void drawDoor(int x, int y, Color color) {
