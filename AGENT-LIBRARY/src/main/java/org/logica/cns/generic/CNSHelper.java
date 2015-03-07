@@ -180,6 +180,7 @@ public class CNSHelper {
         return constructDFAgentDescription(name, l);
     }
 
+    private static final String[] EMPTYSTRINGARRAY = new String[0];
     /**
      * {@link #createServiceDescription(java.lang.String, java.lang.String, java.lang.String[], java.lang.String[]) }
      * @param name
@@ -187,7 +188,7 @@ public class CNSHelper {
      * @return
      */
     public static ServiceDescription createServiceDescription(String name, String type) {
-        return createServiceDescription(name, type, new String[] {}, new String[] {});
+        return createServiceDescription(name, type, EMPTYSTRINGARRAY, EMPTYSTRINGARRAY);
     }
 
     /**
