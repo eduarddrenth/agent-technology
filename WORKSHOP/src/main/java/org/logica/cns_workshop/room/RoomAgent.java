@@ -3,21 +3,17 @@ package org.logica.cns_workshop.room;
 import jade.content.ContentElementList;
 import jade.content.Predicate;
 import jade.content.lang.Codec.CodecException;
-import jade.content.onto.Ontology;
 import jade.content.onto.OntologyException;
 import jade.content.onto.UngroundedException;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.logica.cns.generic.CNSAgentInitializer;
-import org.logica.cns.generic.CNSAgentInitializerImpl;
 import org.logica.cns.generic.CNSHelper;
 import org.logica.cns.generic.CNSMessageHandler;
 import org.logica.cns.generic.CNSMessageHandlerImpl;
@@ -57,8 +53,8 @@ public class RoomAgent extends WorkshopAgent {
         super.setup();
         withinRange = (int) Math.pow(Integer.parseInt(JadeHelper.getProperty(SmileyAgent.WITHINRANGE)), 2);
         room.setAID(getAID());
-        addBehaviour(new UpdateGUIBehavior(RoomAgent.this, 50));
-        addBehaviour(new InformSmileysBehavior(RoomAgent.this, 500));
+        addBehaviour(new UpdateGUIBehavior(RoomAgent.this, 20));
+        addBehaviour(new InformSmileysBehavior(RoomAgent.this, 50));
     }
 
 
@@ -71,7 +67,7 @@ public class RoomAgent extends WorkshopAgent {
                 ColorPoint smiley = initSmiley(n.getSubject());
                 smiley.x += n.getXmove();
                 smiley.y += n.getYmove();
-                smiley.c = ((Smiley) n.getSubject()).getColor();
+                smiley.color = ((Smiley) n.getSubject()).getColor();
                 smiley.foundDoor = ((Smiley) n.getSubject()).getFoundDoor();
             } else if (predicate instanceof LocatedAt) {
                 LocatedAt n = (LocatedAt) predicate;
@@ -139,7 +135,7 @@ public class RoomAgent extends WorkshopAgent {
                         if (!neighbour.getKey().equals(close.getKey()) && !neighbour.getValue().foundDoor && Util.distance(close.getValue().x, close.getValue().y, neighbour.getValue().x, neighbour.getValue().y) < withinRange) {
                             Smiley sm = new Smiley();
                             // vul de gegevens over de buurman
-                            sm.setColor(neighbour.getValue().c);
+                            sm.setColor(neighbour.getValue().color);
                             sm.setAID(neighbour.getKey());
                             sm.setX(neighbour.getValue().x);
                             sm.setY(neighbour.getValue().y);
@@ -171,7 +167,7 @@ public class RoomAgent extends WorkshopAgent {
         if (door != null) {
             gui.clearImage();
             for (ColorPoint cp : smileys.values()) {
-                gui.drawSmiley(cp.x, cp.y, cp.c);
+                gui.drawSmiley(cp.x, cp.y, cp.color);
             }
             gui.drawDoor(door);
             gui.updateGui();
@@ -210,13 +206,14 @@ public class RoomAgent extends WorkshopAgent {
 
     private class ColorPoint {
 
-        int x, y, c;
+        int x, y;
+        int color;
         boolean foundDoor = false;
 
         public ColorPoint(int x, int y, int color) {
             this.x = x;
             this.y = y;
-            this.c = color;
+            this.color = color;
         }
     }
 }

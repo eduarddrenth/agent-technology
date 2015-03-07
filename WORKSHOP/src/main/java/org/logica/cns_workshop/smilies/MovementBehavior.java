@@ -115,7 +115,7 @@ public class MovementBehavior extends TickerBehaviour {
         int x = dx;
         int y = dy;
         // do we see a door?
-        if (door != null) {
+        if (door != null && !smiley.altruistic) {
             // bepaal totale dx/dy
             x = door.x - p.x;
             y = door.y - p.y;
