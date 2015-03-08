@@ -46,7 +46,6 @@ public class SmileyAgent extends WorkshopAgent {
    private static final long serialVersionUID = 1L;
    Point p = new Point();
    Point door = null;
-   boolean altruistic = false;
    Smiley smile = new Smiley();
    LocatedAt doorLoc = new LocatedAt();
    AID roomAID, doorAID;
@@ -76,7 +75,7 @@ public class SmileyAgent extends WorkshopAgent {
             Thread.sleep(12000);
          } catch (InterruptedException ex) {
          }
-         altruistic = false;
+         smile.setAltruistic(false);
       }
    };
 

@@ -24,6 +24,7 @@ import org.logica.cns_workshop.WorkshopAgent;
 import org.logica.cns_workshop.gui.GUI;
 import org.logica.cns_workshop.smilies.SmileyAgent;
 import org.logica.cns_workshop.communication.Door;
+import org.logica.cns_workshop.communication.Located;
 import org.logica.cns_workshop.communication.LocatedAt;
 import org.logica.cns_workshop.communication.MovedTo;
 import org.logica.cns_workshop.communication.ReachedDoor;
@@ -105,7 +106,7 @@ public class RoomAgent extends WorkshopAgent {
     private ColorPoint initSmiley(Smiley loc) {
         ColorPoint smiley = smileys.get(loc.getAID());
         if (smiley == null) {
-            smiley = new ColorPoint(loc.getX(), loc.getY(), loc.getColor(), loc.isAltruistic());
+            smiley = new ColorPoint(loc.getX(), loc.getY(), loc.getColor(),loc.isAltruistic());
             smileys.put(loc.getAID(), smiley);
         }
         return smiley;
@@ -184,7 +185,7 @@ public class RoomAgent extends WorkshopAgent {
         if (door != null) {
             gui.cls(Color.darkGray);
             for (ColorPoint cp : smileys.values()) {
-               gui.drawSmiley(cp.x, cp.y, fromRgb(cp.color), cp.altruistic);
+               gui.drawSmiley(cp.x, cp.y, fromRgb(cp.color),cp.altruistic);
             }
             gui.drawDoor(door);
             gui.updateGui();
