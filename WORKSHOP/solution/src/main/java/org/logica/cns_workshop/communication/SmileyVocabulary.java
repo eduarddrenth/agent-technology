@@ -25,5 +25,6 @@ public interface SmileyVocabulary {
     public static final String Y_MOVE = "ymove";
     public static final String COLOR = "color";
     public static final String FOUNDDOOR = "founddoor";
+    public static final String ALTRUISTIC = "altruistic";
     public static final String FOUNDSELF = "foundMySelf";
 }

@@ -24,7 +24,6 @@ import org.logica.cns_workshop.WorkshopAgent;
 import org.logica.cns_workshop.gui.GUI;
 import org.logica.cns_workshop.smilies.SmileyAgent;
 import org.logica.cns_workshop.communication.Door;
-import org.logica.cns_workshop.communication.Located;
 import org.logica.cns_workshop.communication.LocatedAt;
 import org.logica.cns_workshop.communication.MovedTo;
 import org.logica.cns_workshop.communication.ReachedDoor;
@@ -54,7 +53,7 @@ public class RoomAgent extends WorkshopAgent {
         super.setup();
         withinRange = (int) Math.pow(Integer.parseInt(JadeHelper.getProperty(SmileyAgent.WITHINRANGE)), 2);
         room.setAID(getAID());
-        addBehaviour(new UpdateGUIBehavior(RoomAgent.this, 20));
+        addBehaviour(new UpdateGUIBehavior(RoomAgent.this, 50));
         addBehaviour(new InformSmileysBehavior(RoomAgent.this, 50));
     }
 
@@ -65,17 +64,18 @@ public class RoomAgent extends WorkshopAgent {
         protected void handleContent(Predicate predicate, ACLMessage msg) throws CodecException, UngroundedException, OntologyException {
             if (predicate instanceof MovedTo) {
                 MovedTo n = (MovedTo) predicate;
-                ColorPoint smiley = initSmiley(n.getSubject());
+                ColorPoint smiley = initSmiley((Smiley)n.getSubject());
                 smiley.x += n.getXmove();
                 smiley.y += n.getYmove();
                 smiley.color = ((Smiley) n.getSubject()).getColor();
                 smiley.foundDoor = ((Smiley) n.getSubject()).getFoundDoor();
+                smiley.altruistic = ((Smiley) n.getSubject()).isAltruistic();
             } else if (predicate instanceof LocatedAt) {
                 LocatedAt n = (LocatedAt) predicate;
                 if (n.getSubject() instanceof Door) {
                     door = (Door) n.getSubject();
                 } else if (n.getSubject() instanceof Smiley) {
-                    initSmiley(n.getSubject());
+                    initSmiley((Smiley)n.getSubject());
                 }
             } else if (predicate instanceof ReachedDoor) {
                 ReachedDoor n = (ReachedDoor) predicate;
@@ -102,10 +102,10 @@ public class RoomAgent extends WorkshopAgent {
         init.addServiceDescription(CNSHelper.createServiceDescription(TYPE, TYPE));
     }
 
-    private ColorPoint initSmiley(Located loc) {
+    private ColorPoint initSmiley(Smiley loc) {
         ColorPoint smiley = smileys.get(loc.getAID());
         if (smiley == null) {
-            smiley = new ColorPoint(loc.getX(), loc.getY(), ((Smiley) loc).getColor());
+            smiley = new ColorPoint(loc.getX(), loc.getY(), loc.getColor(), loc.isAltruistic());
             smileys.put(loc.getAID(), smiley);
         }
         return smiley;
@@ -182,9 +182,9 @@ public class RoomAgent extends WorkshopAgent {
 
     private void draw(GUI gui) {
         if (door != null) {
-            gui.cls(Color.lightGray.getRGB());
+            gui.cls(Color.darkGray);
             for (ColorPoint cp : smileys.values()) {
-               gui.drawSmiley(cp.x, cp.y, fromRgb(cp.color));
+               gui.drawSmiley(cp.x, cp.y, fromRgb(cp.color), cp.altruistic);
             }
             gui.drawDoor(door);
             gui.updateGui();
@@ -226,11 +226,13 @@ public class RoomAgent extends WorkshopAgent {
         int x, y;
         int color;
         boolean foundDoor = false;
+        boolean altruistic;
 
-        public ColorPoint(int x, int y, int color) {
+        public ColorPoint(int x, int y, int color, boolean altruistic) {
             this.x = x;
             this.y = y;
             this.color = color;
+            this.altruistic = altruistic;
         }
     }
 }

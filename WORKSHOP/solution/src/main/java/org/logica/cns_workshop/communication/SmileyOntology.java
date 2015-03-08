@@ -51,6 +51,7 @@ public class SmileyOntology extends Ontology {
          cs.addSuperSchema((ConceptSchema) getSchema(LOCATED));
          cs.add(COLOR, (PrimitiveSchema) getSchema(BasicOntology.INTEGER));
          cs.add(FOUNDDOOR, (PrimitiveSchema) getSchema(BasicOntology.BOOLEAN));
+         cs.add(ALTRUISTIC, (PrimitiveSchema) getSchema(BasicOntology.BOOLEAN));
 
          // predicates
          PredicateSchema move = new PredicateSchema(NOTIFY_MOVE);

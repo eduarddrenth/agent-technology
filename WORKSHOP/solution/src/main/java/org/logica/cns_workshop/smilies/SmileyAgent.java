@@ -73,13 +73,13 @@ public class SmileyAgent extends WorkshopAgent {
       addBehaviour(new StartMovingBehavior(SmileyAgent.this));
    }
 
-   private static final Random r = new Random();
+   private static final Random random = new Random();
    
    private final Runnable changeMind = new Runnable() {
 
       public void run() {
          try {
-            Thread.sleep(8000);
+            Thread.sleep(12000);
          } catch (InterruptedException ex) {
          }
          altruistic = false;
@@ -125,12 +125,12 @@ public class SmileyAgent extends WorkshopAgent {
                       || l.getSender() instanceof Smiley) {
                      log.info("door found: " + l.getSubject().getAID().getName() + ", send by: " + l.getSender().getAID().getName());
                      door = new Point(l.getSubject().getX(), l.getSubject().getY());
-                     int i = r.nextInt(100) + 1;
-                     if (i < 31) {
-                        altruistic = true;
+                     int i = random.nextInt(100);
+                     if (i < 30) {
+                        smile.setAltruistic(true);
                         new Thread(changeMind).start();
-                        smile.setColor(Color.yellow.getRGB());
-                     } else if (l.getSender() instanceof Room) {
+                     }
+                     if (l.getSender() instanceof Room) {
                         smile.setColor(Color.green.getRGB());
                         smile.setFoundDoor(true);
                      } else if (((Door) l.getSubject()).getFoundMySelf()) {

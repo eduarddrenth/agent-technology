@@ -56,8 +56,8 @@ public class GUI extends JFrame {
       g2.scale(3, 3);
    }
 
-   public void cls(int value) {
-      g2.setColor(new Color(value));
+   public void cls(Color value) {
+      g2.setColor(value);
       g2.fillRect(0, 0, w*2, h*2);
    }
 
@@ -75,7 +75,12 @@ public class GUI extends JFrame {
       });
    }
 
-   public void drawSmiley(int x, int y, Color color) {
+   public void drawSmiley(int x, int y, Color color, boolean altruistic) {
+      if (altruistic) {
+         g2.setStroke(new BasicStroke(2));
+         g2.setColor(Color.orange);
+         g2.drawOval(x+2, y-4, 6, 3);
+      }
       g2.setColor(color);
       g2.setStroke(new BasicStroke(3));
       g2.drawOval(x, y, 10, 10);
