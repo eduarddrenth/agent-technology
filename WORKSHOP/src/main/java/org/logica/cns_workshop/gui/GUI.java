@@ -79,7 +79,7 @@ public class GUI extends JFrame {
       if (altruistic) {
          g2.setStroke(new BasicStroke(2));
          g2.setColor(Color.orange);
-         g2.drawOval(x+2, y-4, 6, 3);
+         g2.drawOval(x+2, y-5, 6, 3);
       }
       g2.setColor(color);
       g2.setStroke(new BasicStroke(3));
