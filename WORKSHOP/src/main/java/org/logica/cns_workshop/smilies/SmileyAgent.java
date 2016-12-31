@@ -98,13 +98,11 @@ public class SmileyAgent extends WorkshopAgent {
          for (ContentElement c : list.toArray()) {
             if (c instanceof YourNeighbour) {
                YourNeighbour ynb = (YourNeighbour) c;
-               if (Util.distance(p.x, p.y, ynb.getSender().getX(), ynb.getSender().getY()) < withinRange) {
                   doorLoc.setSubject(ynb.getDoor());
                   // we weten hier ook via ynb.getFoundDoor() of we zelf de deur gevonden hebben
                   ((Door) doorLoc.getSubject()).setFoundMySelf(ynb.getFoundDoor());
                   smsg.addReceiver(ynb.getSender().getAID());
                   doSend = true;
-               }
             }
          }
          if (doSend) {

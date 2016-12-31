@@ -67,12 +67,7 @@ public class GUI extends JFrame {
    }
 
    public void updateGui() {
-      SwingUtilities.invokeLater(new Runnable() {
-
-         public void run() {
-            repaint();
-         }
-      });
+    repaint();
    }
 
    public void drawSmiley(int x, int y, Color color, boolean altruistic) {
