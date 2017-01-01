@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -69,15 +70,19 @@ public class GUI extends JFrame {
    public void updateGui() {
     repaint();
    }
+   
+   private static final Stroke stroke1 = new BasicStroke(1);
+   private static final Stroke stroke2 = new BasicStroke(2);
+   private static final Stroke stroke3 = new BasicStroke(3);
 
    public void drawSmiley(int x, int y, Color color, boolean altruistic) {
       if (altruistic) {
-         g2.setStroke(new BasicStroke(2));
+         g2.setStroke(stroke2);
          g2.setColor(Color.orange);
          g2.drawOval(x+2, y-5, 6, 3);
       }
       g2.setColor(color);
-      g2.setStroke(new BasicStroke(3));
+      g2.setStroke(stroke3);
       g2.drawOval(x, y, 10, 10);
       g2.setColor(Color.yellow);
       g2.fillOval(x, y, 10, 10);
@@ -85,7 +90,7 @@ public class GUI extends JFrame {
       g2.fillOval(x + 2, y + 3, 2, 2);
       g2.fillOval(x + 6, y + 3, 2, 2);
       g2.setColor(Color.red);
-      g2.setStroke(new BasicStroke(1));
+      g2.setStroke(stroke1);
       g2.drawArc(x + 2, y + 5, 6, 3,180,180);
    }
 
